@@ -23,8 +23,7 @@ jobs:
         message: 'Automated test retrieval'
         author_name: ${{ github.repository_owner }}
      
-  test_and_manage_issues:
-    needs: get_test
+  test_and_comment:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -34,34 +33,21 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Setup flake8 annotations
-      uses: rbialon/flake8-annotations@v1
-    - name: Lint with flake8
-      run: |
-        flake8 src/exercise.py --select=E9,F63,F7,F82 --show-source
-        flake8 src/exercise.py --max-complexity=10 --max-line-length=127
-    - name: Test with pytest
-      run: python3 -m pytest >> .github/ISSUE_TEMPLATE/test-failure.md 
-      
-    - name: Create issue (if tests fail)
+        pip install -r requirements.txt   
+    - name: Test student program
+      run: python3 -m pytest >> .github/ISSUE_TEMPLATE/test-failure.md
+    - name: Failure message
       if: failure()
-      uses: JasonEtco/create-an-issue@v2
-      env:
+      uses: machine-learning-apps/pr-comment@master
+      env: 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        REPO: ${{ github.repository }}
       with:
-        filename: .github/ISSUE_TEMPLATE/test-failure.md
-        update_existing: true
-        assignees: ${{ github.actor }}  
-        
-    - name: Close issue (if tests pass)
-      if: success()
-      uses: actions/stale@v3
+        path: .github/ISSUE_TEMPLATE/test-failure.md    
+    - name: Lint student program
+      run: flake8 src/exercise.py --max-line-length=79
+    - name: Success message
+      uses: machine-learning-apps/pr-comment@master
+      env: 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        only-labels: 'bug'
-        stale-issue-label: 'resolved'
-        stale-issue-message: 'Student Program passes all tests. Issue is resolved'
-        close-issue-message: 'Closing issue.'
-        days-before-issue-stale: 0
-        days-before-close: 0      
+        path: .github/ISSUE_TEMPLATE/test-success.md
