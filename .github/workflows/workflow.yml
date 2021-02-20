@@ -6,23 +6,7 @@ on:
       - 'src/exercise.py'
 
 jobs:
-  
-  get_test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/checkout@v2
-      with: 
-        repository: CS-1030/test-scripts          
-        token: ${{ secrets.PAT }}
-        path: temp
-    - run: cat temp/lesson7/test_exercise.py > tests/test_exercise.py
-    - uses: EndBug/add-and-commit@v7
-      with:
-        add: 'tests/test_exercise.py --force'
-        message: 'Automated test retrieval'
-        author_name: ${{ github.repository_owner }}
-     
+      
   test_and_comment:
     runs-on: ubuntu-latest
     steps:
