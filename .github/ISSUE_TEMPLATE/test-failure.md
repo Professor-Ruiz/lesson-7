@@ -1,7 +1,7 @@
 # :beetle: Test failure
-> Test failures can be caused by incorrect output formatting, logic errors, or runtime errors. They are more difficult to find and fix than syntax/style errors. But if you follow the directions in each section below, you should be able to pinpoint the bug.
+> Test failures can be caused by incorrect output formatting, logic errors, or runtime errors. They are more difficult to find and fix than syntax/style errors. But if you follow the directions in each section below, you should be able to pinpoint the bug. Once you think you've found the issue, update your program and resubmit (commit/push). You may need to repeat this cycle several times. :repeat: 
 > 
-> Once you've found the issue, update your program and resubmit (commit/push). You may need to repeat this cycle several times. :repeat: 
+> [This video](https://youtu.be/gdc-SYhRFCM) illustrates how I use GitHub and Repl.it to debug a programming assignment.
 
 ### :printer: Output formatting
 1. Open the [assignment directions](../blob/main/README.md) here in GitHub, and find the **output requirements**.
